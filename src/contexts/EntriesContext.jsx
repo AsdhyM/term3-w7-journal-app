@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 
 // Create the context
@@ -26,6 +26,10 @@ export function useJournalEntriesSetter(){
 
 export default function JournalEntriesProvider(props){
     let [journalEntries, setJournalEntries] = useState([]);
+
+    useEffect(() => {
+        console.log(journalEntries);
+    }, [journalEntries]);
 
     return(
         <JournalEntriesDataContext.Provider value={journalEntries}>
