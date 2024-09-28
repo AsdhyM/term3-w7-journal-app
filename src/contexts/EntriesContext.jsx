@@ -3,7 +3,8 @@ import { createContext, useContext, useState } from "react";
 
 // Create the context
 //      SomeContextVariable = createContext(defaultValue);
-const JournalEntriesContext = createContext([]);
+const JournalEntriesDataContext = createContext([]);
+const JournalEntriesSetterContext = createContext(null);
 
 // Create custom hooks to access the context data
 export function useJournalEntriesData(){
@@ -17,14 +18,20 @@ export function useJournalEntriesData(){
     return currentJournalData;
 }
 
+export function useJournalEntriesSetter(){
+    return useContext(JournalEntriesSetterContext);
+}
+
 // Create the context provider
 
 export default function JournalEntriesProvider(props){
     let [journalEntries, setJournalEntries] = useState([]);
 
     return(
-        <JournalEntriesContext.Provider value={journalEntries}>
-            {props.children}
-        </JournalEntriesContext.Provider>
+        <JournalEntriesDataContext.Provider value={journalEntries}>
+            <JournalEntriesSetterContext.Provider value={setJournalEntries}>
+                {props.children}
+            </JournalEntriesSetterContext.Provider>
+        </JournalEntriesDataContext.Provider>
     );
 }
